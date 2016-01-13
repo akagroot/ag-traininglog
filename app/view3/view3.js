@@ -9,7 +9,13 @@ angular.module('myApp.view3', ['ngRoute'])
   });
 }])
 
-.controller('View3Ctrl', [
-	function() {
+.controller('View3Ctrl', ['$scope',
+	function(scope) {
+		scope.add = function(description) {
+			if(description == null)
+				alert('The description is empty');
+			else
+				alert('This is a full description');
+		}
 	}
 ]);
