@@ -1,30 +1,33 @@
 /* app css stylesheet */
 
-.menu {
-  list-style: none;
-  border-bottom: 0.1em solid black;
-  margin-bottom: 2em;
-  padding: 0 0 0.5em;
+.navbar-inverse { 
+  color:white;
 }
 
-.menu:before {
-  content: "[";
+.log { 
+  padding-right: 50px;
 }
 
-.menu:after {
-  content: "]";
+.log a {
+  color:inherit;
+  text-decoration: none;
 }
 
-.menu > li {
-  display: inline;
+.log a > * {
+  border-bottom: 1px solid lightgrey;
 }
 
-.menu > li:before {
-  content: "|";
-  padding-right: 0.3em;
+.navbar {
+  border-radius: 0px;
 }
 
-.menu > li:nth-child(1):before {
-  content: "";
-  padding: 0;
+.navbar + *{
+  margin-top: 10px;
+  top:50px; 
+  position:absolute; 
+  padding-bottom:50px;
+}
+
+.center {
+  text-align: center;
 }
