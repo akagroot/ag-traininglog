@@ -31,3 +31,11 @@
 .center {
   text-align: center;
 }
+
+.error {
+  color: #a94442;
+}
+
+.clickable {
+  cursor: pointer;
+}

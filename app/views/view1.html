@@ -1,0 +1,21 @@
+<div class="navbar navbar-fixed-top navbar-inverse well-sm menu">
+	<span class="col-sm-2 col-xs-3">The Log</span>
+	<div class="col-sm-8 col-xs-7">
+		<input class="form-control" id="query" ng-model="query" placeholder="Search" />
+	</div>
+	<div class="clickable col-sm-2 col-xs-2" ng-click="logout()">Logout</div>
+</div>
+
+<div style="" class="table log">
+	<a href="#/log_details/{{entry.id}}"  ng-repeat="entry in entries | filter:query | orderBy:orderBy" ng-class="{'bottom':$last}">
+		<div>
+			<h4>{{entry.id}}</h4>
+			<h4>{{entry.date | relativeTime}}</h4>
+			<p>{{entry.description}}</p>
+		</div>
+	</a>
+</div>
+
+<div class="footer navbar-fixed-bottom" style="padding-right: 20px; padding-bottom:20px;">
+	<a href="#/add_log" class="col-xs-2 col-xs-offset-10 btn btn-primary">+</a>
+</div>

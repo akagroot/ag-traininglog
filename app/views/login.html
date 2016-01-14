@@ -1,0 +1,28 @@
+<div style="width: 80%; position: absolute; top: 50%; left: 10%; transform: translate(0, -50%); margin-left: auto; margin-right: auto;">
+	<form ng-submit="login(username, password)">
+		<div class="form-group row">
+			<label class="col-lg-offset-4 col-lg-2 col-sm-4 form-control-label">Username</label>
+			<div class="col-sm-8 col-lg-4">
+				<input name="username" class="form-control" ng-model="username" placeholder="Username" />
+			</div>
+			<span id="username_error" class="col-sm-8 error">
+				Please enter a username.
+			</span>
+		</div>
+		<div class="form-group row">
+			<label class="col-lg-offset-4 col-lg-2 col-sm-4 form-control-label">Password</label>
+			<div class="col-sm-8 col-lg-4">
+				<input name="password" type="password" class="form-control" ng-model="password" placeholder="Password" />
+			</div>
+			<span id="password_error" class="col-sm-8 error">
+				Please enter a password.
+			</span>
+		</div>
+		<div class="row col-sm-10">
+			<input type="submit" class="btn btn-primary" value="Login" style="width: 100%;" />
+		</div>
+	</form>
+	<h5 class="center well well-sm">
+		<a href="#/register">Register</a>
+	</h5>
+</div>
