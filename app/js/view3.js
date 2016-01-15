@@ -45,7 +45,53 @@ angular.module('myApp.view3', ['ngRoute'])
 			});
 		}
 
+		$scope.addExercise = function() {
+			$scope.exercises.push(new Object());
+		}
+
+		var selectedQuickListElement = null;
+
+		$scope.itemPicked = function(name) {
+			$scope.quickListFilter = "";
+			console.log(name);
+			$('#quickList').hide();
+
+			if(selectedQuickListElement != null) {
+				$(selectedQuickListElement).attr('value', name);
+			}
+		}
+
+		$scope.selectedElementForQuickList = null;
+		$scope.showQuickList = function(element) {
+			$('#quickList').show();
+			selectedQuickListElement = element;
+			console.log(element);
+		}
+
+		$scope.quickListFilter = "";
+		$scope.quickList = [ {
+				"name":"Back Squat"
+			}, {
+				"name":"Deadlifts"
+			}, {
+				"name":"Front Squat"
+			}, {
+				"name":"Overhead Squat"
+			}, {
+				"name":"Bench Press"
+			}, {
+				"name":"Overhead Press"
+			}, {
+				"name":"Clean"
+			}, {
+				"name":"Snatch"
+			}
+		];
+
+		$scope.exercises = new Array();
 		$scope.description="";
 		$scope.date = new Date();
+
+		$('.hideOnStart').hide();
 	}
 ]);
