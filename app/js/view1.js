@@ -11,41 +11,32 @@ angular.module('myApp.view1', ['ngRoute'])
 
 .controller('View1Ctrl', ['$scope', '$http', '$location',
 	function($scope, $http, $location) {
-
 		// $http.get('data/log_data.json').success(function(data) {
 		// 	$scope.entries = data;
 		// });
+
 		$scope.logout = function(form) {
 			Parse.User.logOut();
 			$location.path('/login');
 		}
-
-		// Parse.User.current().clear();
-		// Parse.User.current().save();
 		
 		var currentUser = Parse.User.current();
 
-		// currentUser.set('log_count', 0);
-		// console.log(Parse.User.current().get('log_count'));
-
-console.log(currentUser);
 		var Log = Parse.Object.extend("Log");
-		var query = new Parse.Query(Log);
-		query.equalTo("user", currentUser.getUsername())
-		.select("description", "date")
-		.limit(14)
-		.find( {
-			success: function(logs) {
-				$scope.entries = logs;
-				console.log(logs);
+		var query = new Parse.Query(Log)
+			.limit(14)
+			.equalTo("user", currentUser)
+			.select("description", "date")
+			.find()
+			.then(function(results) {
+				var entries = new Array();
+				$.each(results, function(i, e) {
+					entries.push(e.toJSON());
+				});
+				console.log(entries);
+				$scope.entries = entries;
 
-				$("html, body").animate({ scrollTop: $(document).height() }, "fast");
-			}, 
-			error: function(error) {
-				console.log(error);
-			}
-		});
-
-		$scope.orderBy = 'date';
+				$scope.$apply();
+			});
 	}
 ]);

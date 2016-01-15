@@ -49,17 +49,17 @@ angular.module('myAppFilters', [])
 		var difference = today.getTime() - inputDate.getTime();
 
 		if(difference == 0)
-			return "Today (" + formatDate(input) + ")";
+			return "Today (" + formatDate(inputDate) + ")";
 
 		if(difference == 86400000)
-			return "Yesterday (" + formatDate(input) + ")";
+			return "Yesterday (" + formatDate(inputDate) + ")";
 
 		if(difference < 604800000)
-			return switchDay(inputDate.getDay()) + " (" + formatDate(input) + ")";
+			return switchDay(inputDate.getDay()) + " (" + formatDate(inputDate) + ")";
 
 		if(difference < 1209600000 && inputDate.getDay() <= today.getDay())
-			return "Last " + switchDay(inputDate.getDay()) + " (" + formatDate(input) + ")";
+			return "Last " + switchDay(inputDate.getDay()) + " (" + formatDate(inputDate) + ")";
 
-		return formatDate(input) + " (" + switchDay(inputDate.getDay()) + ")";
+		return formatDate(inputDate) + " (" + switchDay(inputDate.getDay()) + ")";
 	};
 });

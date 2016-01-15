@@ -11,8 +11,14 @@ angular.module('myApp.view3', ['ngRoute'])
 
 .controller('View3Ctrl', ['$scope','$location',
 	function($scope, $location) {
-		$scope.add = function(description) {
-			if(typeof description == 'undefined' || description.length == 0)
+		$scope.add = function() {
+			if(typeof $scope.date == 'undefined' || $scope.date.length == 0)
+			{
+				alert('Date is empty');
+				return;
+			}
+
+			if(typeof $scope.description == 'undefined' || $scope.description.length == 0)
 			{
 				alert('Description is empty');
 				return;
@@ -22,17 +28,24 @@ angular.module('myApp.view3', ['ngRoute'])
 			var logCount = currentUser.get('log_count');
 			currentUser.increment('log_count');
 
-			var NewLog = Parse.Object.extend("Log");
-			var newLog = new NewLog();
-			
-			newLog.set("description", description);
-			newLog.set("date", new Date());
-			newLog.set("user", currentUser.getUsername());
-			newLog.save();
+			var Log = Parse.Object.extend("Log");
+			var newLog = new Log();
 
-			// currentUser.add('log_data', NewLog);
-			// currentUser.save();
-			$location.path('/view1');
+			newLog.set("description", $scope.description);
+			newLog.set("user", currentUser);
+			newLog.set("date", $scope.date);
+			newLog.save(null, {
+				success: function(newLogAgain) {
+					$location.path('/view1');
+				}, 
+				error: function(newLogAgain, error) {
+					alert("Something went wrong.");
+					console.log(error);
+				}
+			});
 		}
+
+		$scope.description="";
+		$scope.date = new Date();
 	}
 ]);

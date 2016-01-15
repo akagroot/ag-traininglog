@@ -7,10 +7,9 @@
 </div>
 
 <div style="" class="table log">
-	<a href="#/log_details/{{entry.id}}"  ng-repeat="entry in entries | filter:query | orderBy:orderBy" ng-class="{'bottom':$last}">
+	<a href="#/log_details/{{entry.objectId}}" ng-repeat="entry in entries | filter:query | orderBy:orderBy">
 		<div>
-			<h4>{{entry.id}}</h4>
-			<h4>{{entry.date | relativeTime}}</h4>
+			<h4>{{entry.date.iso | relativeTime}}</h4>
 			<p>{{entry.description}}</p>
 		</div>
 	</a>
