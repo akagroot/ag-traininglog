@@ -1,0 +1,3 @@
+<div class="clickable panel-heading center" ng-repeat="item in items | orderBy: orderby | filter:filter">
+	<span ng-click="model = item; itemPicked({item:item})">{{item}}</span>
+</div>

@@ -50,22 +50,42 @@ angular.module('myApp.view3', ['ngRoute'])
 		}
 
 		var selectedQuickListElement = null;
+		var bindValue = null;
 
 		$scope.itemPicked = function(name) {
 			$scope.quickListFilter = "";
 			console.log(name);
 			$('#quickList').hide();
 
+			bindValue = name;
+
 			if(selectedQuickListElement != null) {
-				$(selectedQuickListElement).attr('value', name);
+    // var input = $('input');
+    // input.val('xxx');
+    // input.trigger('input');
+
+    			$(selectedQuickListElement).val(name);
+    			$(selectedQuickListElement).trigger('input');
+
+				// $(selectedQuickListElement).attr('value', name);
+				// $(selectedQuickListElement).html(name);
 			}
 		}
 
-		$scope.selectedElementForQuickList = null;
-		$scope.showQuickList = function(element) {
-			$('#quickList').show();
+		$scope.updateFilter = function() {
+			$scope.quickListFilter = selectedQuickListElement.value;
+		}
+
+		$scope.showQuickList = function($event, bind) {
+			var element = $event.target;
+			console.log("Binding:");
+			console.log(bind);
+
 			selectedQuickListElement = element;
-			console.log(element);
+			bindValue = bind;
+			$scope.quickListFilter = bind;
+
+			$('#quickList').show();
 		}
 
 		$scope.quickListFilter = "";

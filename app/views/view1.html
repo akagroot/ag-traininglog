@@ -7,6 +7,8 @@
 </div>
 
 <div style="" class="table log">
+	<a href="#/testquicklist">Test Quick List</a>
+
 	<a href="#/log_details/{{entry.objectId}}" ng-repeat="entry in entries | filter:query | orderBy:orderBy">
 		<div>
 			<h4>{{entry.date.iso | relativeTime}}</h4>

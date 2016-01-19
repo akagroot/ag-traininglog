@@ -9,7 +9,9 @@ angular.module('myApp', [
   'myApp.view2',
   'myApp.view3',
   'myApp.version', 
-  'myAppFilters'
+  'myAppFilters', 
+  'myApp.testquicklist', 
+  'myAppQuickList'
 ]).
 config(['$routeProvider', function($routeProvider, $locationProvider) {
   $routeProvider.otherwise({redirectTo: '/login'});
