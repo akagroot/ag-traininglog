@@ -1,0 +1,7 @@
+<input class="form-control" ng-click="showNumpad=true" ng-model="number" />
+
+<div ng-show="showNumpad" class="footer navbar-fixed-bottom panel panel-default" >
+	<!-- style="max-height: 40%; overflow-y: scroll;" -->
+	<div my-num-pad enter-pressed="showNumpad=false"
+		number-pressed="number=number+value" backspace-pressed=""/>
+</div>

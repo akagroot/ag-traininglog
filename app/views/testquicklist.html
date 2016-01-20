@@ -1,12 +1,14 @@
 
 <h4>Test Quick List</h4>
 
-<input class="form-control" type="text" ng-model="theItem" 
-	ng-click="angular.bind(theItem, selectedModel); myFilter = theItem; showQuickList = true; log(selectedModel)" 
-	ng-change="myFilter = theItem; log(myFilter);"/>
-<input class="form-control" type="text" ng-model="theItem2" ng-click="myFilter = theItem2; showQuickList = true"/>
+<div ng-repeat="(key, item) in livingItems">
+	<input class="form-control" type="text" ng-model="item"
+		ng-click="$parent.selectedLivingItemIndex = key; $parent.myFilter = item; $parent.showQuickList = true; log(key);" 
+		ng-change="$parent.myFilter = item;" />
+</div>
 
-<div id="quickList" ng-show="showQuickList" class="footer navbar-fixed-bottom panel panel-default" 
+<div ng-show="showQuickList" class="footer navbar-fixed-bottom panel panel-default" 
 	style="max-height: 40%; overflow-y: scroll;">
-	<div my-quick-list items="myItems" filter="myFilter" item-picked="selectedModel = item;myFilter = item; showQuickList = false; log(selectedModel);"/>
+	<div my-quick-list items="myItems" filter="myFilter" 
+		item-picked="log(selectedLivingItemIndex); livingItems[selectedLivingItemIndex] = item; myFilter = item; showQuickList = false;"/>
 </div>

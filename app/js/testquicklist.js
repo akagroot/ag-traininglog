@@ -11,11 +11,13 @@ angular.module('myApp.testquicklist', ['ngRoute'])
 
 .controller('TestQuickListCtrl', ['$scope', 
 	function($scope) {
+		$scope.livingItems = ["Item", "Another", "Then"];
 		$scope.myItems = ["Item 1", "Another 2", "Then 3", "Select 4", "Item 5"];
 		$scope.theItem = "Item";
 		$scope.theItem2 = "Another 2";
 		$scope.myFilter = "";
-		$scope.selectedModel = null;
+		$scope.selectedLivingItemIndex = "-1";
+		$scope.showQuickList = false;
 
 		$scope.log = function(item)
 		{
@@ -31,7 +33,5 @@ angular.module('myApp.testquicklist', ['ngRoute'])
 		$scope.sayMessage = function() {
 			console.log('here');
 		}
-
-		$scope.showQuickList = true;
 	}
 ]);
