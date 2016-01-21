@@ -45,6 +45,15 @@ angular.module('myApp.view3', ['ngRoute'])
 			});
 		}
 
+		$scope.getNumber = function(num) {
+
+			var x = new Array(); 
+			for(var i = 0; i < num; i++) { 
+				x.push(i+1); 
+			} 
+			return x;
+		}
+
 		$scope.addExercise = function() {
 			$scope.exercises.push(new Object());
 		}

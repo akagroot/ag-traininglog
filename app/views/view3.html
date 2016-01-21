@@ -31,7 +31,8 @@
 				margin-bottom: 5px;
 			}
 		</style>
-		<div class="form-inline well well-sm" ng-repeat="(key, exercise) in exercises">
+		<div class="form-inline well well-sm" ng-repeat="(key, exercise) in exercises track by $index">
+			<h4><small>Exercise {{$index + 1}}</small></h4>
 			<div class="input-group col-xs-12">
 				<span class="input-group-addon">Name</span>
 				<input class="form-control" ng-model="exercise.name" ng-click="exerciseNameClicked(key)" placeholder="Choose an exercise" ng-change="exerciseNameChanged(exercise.name)"/>
@@ -41,6 +42,15 @@
 				<input class="form-control" ng-model="exercise.sets" placeholder="Sets"/>
 				<span class="input-group-addon">Reps</span>
 				<input class="form-control" ng-model="exercise.reps" placeholder="Reps"/>
+			</div>
+			<div class="well well-sm" ng-show="exercise.sets > 0">
+				<div class="input-group" ng-repeat="i in getNumber(exercise.sets)">
+					<span class="input-group-addon"><small>Set {{i}}</small></span>
+					<span class="input-group-addon"><small>Reps Complete</small></span>
+					<input class="form-control" value="{{exercise.reps}}" />
+					<span class="input-group-addon"><small>@</small></span>
+					<input class="form-control" />
+				</div>
 			</div>
 		</div>
 		<span class="clickable clickable-text" ng-click="addExercise();">+ Add Exercise</span>
