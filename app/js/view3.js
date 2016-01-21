@@ -49,69 +49,51 @@ angular.module('myApp.view3', ['ngRoute'])
 			$scope.exercises.push(new Object());
 		}
 
-		var selectedQuickListElement = null;
-		var bindValue = null;
+		$scope.showExerciseQuicklist = false;
+		$scope.selectedExerciseKey = "";
 
-		$scope.itemPicked = function(name) {
-			$scope.quickListFilter = "";
-			console.log(name);
-			$('#quickList').hide();
-
-			bindValue = name;
-
-			if(selectedQuickListElement != null) {
-    // var input = $('input');
-    // input.val('xxx');
-    // input.trigger('input');
-
-    			$(selectedQuickListElement).val(name);
-    			$(selectedQuickListElement).trigger('input');
-
-				// $(selectedQuickListElement).attr('value', name);
-				// $(selectedQuickListElement).html(name);
-			}
+		$scope.exerciseNameLostFocus = function() {
+			$scope.showExerciseQuicklist = false;
 		}
 
-		$scope.updateFilter = function() {
-			$scope.quickListFilter = selectedQuickListElement.value;
+		$scope.closeExerciseQuicklist = function() {
+			$scope.showExerciseQuicklist = false;
 		}
 
-		$scope.showQuickList = function($event, bind) {
-			var element = $event.target;
-			console.log("Binding:");
-			console.log(bind);
-
-			selectedQuickListElement = element;
-			bindValue = bind;
-			$scope.quickListFilter = bind;
-
-			$('#quickList').show();
+		$scope.exerciseNameClicked = function(key) {
+			$scope.selectedExerciseKey = key;
+			$scope.exerciseListFilter = "";
+			$scope.showExerciseQuicklist = true;
+			console.log(key);
 		}
 
-		$scope.quickListFilter = "";
-		$scope.quickList = [ {
-				"name":"Back Squat"
-			}, {
-				"name":"Deadlifts"
-			}, {
-				"name":"Front Squat"
-			}, {
-				"name":"Overhead Squat"
-			}, {
-				"name":"Bench Press"
-			}, {
-				"name":"Overhead Press"
-			}, {
-				"name":"Clean"
-			}, {
-				"name":"Snatch"
-			}
+		$scope.exerciseNameChanged = function(name) {
+			$scope.exerciseListFilter = name;
+		}
+
+		$scope.exercisePicked = function(name) {
+			console.log('here');
+			console.log($scope.selectedExerciseKey);
+			var exercise = $scope.exercises[$scope.selectedExerciseKey];
+			console.log(exercise);
+			exercise.name = name;
+			$scope.showExerciseQuicklist = false;
+		}
+
+		$scope.exerciseListFilter = "";
+		$scope.exerciseList = [
+			"Back Squat", 
+			"Deadlifts", 
+			"Front Squat", 
+			"Overhead Squat", 
+			"Bench Press", 
+			"Overhead Press", 
+			"Clean", 
+			"Snatch"
 		];
 
-		$scope.exercises = new Array();
+		$scope.exercises = [ new Object() ];
 		$scope.description="";
 		$scope.date = new Date();
-
-		$('.hideOnStart').hide();
 	}
 ]);

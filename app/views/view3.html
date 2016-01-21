@@ -31,10 +31,10 @@
 				margin-bottom: 5px;
 			}
 		</style>
-		<div class="form-inline well well-sm" ng-repeat="exercise in exercises">
+		<div class="form-inline well well-sm" ng-repeat="(key, exercise) in exercises">
 			<div class="input-group col-xs-12">
 				<span class="input-group-addon">Name</span>
-				<input class="form-control" ng-model="exercise.name" ng-change="updateFilter()" ng-click="showQuickList($event, exercise.name)" placeholder="Choose an exercise"/>
+				<input class="form-control" ng-model="exercise.name" ng-click="exerciseNameClicked(key)" placeholder="Choose an exercise" ng-change="exerciseNameChanged(exercise.name)"/>
 			</div>
 			<div class="input-group">
 				<span class="input-group-addon">Sets</span>
@@ -51,16 +51,12 @@
 	</form>
 </div>
 
-<input type="hidden" ng-bind="quickListFilter" value="{{quickListFilter}}" />
-
 <style>
 	.footer {
 		margin-bottom: 0px;
 	}
 </style>
 
-<div id="quickList" class="footer navbar-fixed-bottom panel panel-default hideOnStart" style="max-height: 40%; overflow-y: scroll;">
-	<div class="clickable panel-heading center" ng-repeat="item in quickList | orderBy: 'name' | filter:quickListFilter">
-		<span ng-click="itemPicked(item.name)">{{item.name}}</span>
-	</div>
+<div ng-show="showExerciseQuicklist" class="footer navbar-fixed-bottom panel panel-default" style="max-height: 40%; overflow-y: scroll;">
+	<div my-quick-list items="exerciseList" filter="exerciseListFilter" item-picked="console.log(item); exercisePicked(item)" close-pressed="closeExerciseQuicklist()"></div>
 </div>
