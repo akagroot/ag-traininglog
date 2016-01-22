@@ -1,4 +1,6 @@
 <div style="position: fixed; display: block; right: 10px; margin-top:10px;" ng-click="closePressed()"><button class="btn btn-alert btn-sm">Close &times;</button></div>
-<div class="clickable panel-heading center" style="overflow-y:scroll;" ng-repeat="item in items | orderBy: orderby | filter:filter">
-	<span ng-click="itemPicked({item:item})">{{item}}</span>
-</div>
+<table class="clickable table table-striped">
+	<tr ng-repeat="item in items | orderBy: orderby | filter:filter">
+		<td class="text-center" ng-click="itemPicked({item:item})">{{item}}</td>
+	</tr>
+</table>

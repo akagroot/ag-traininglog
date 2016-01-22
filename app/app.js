@@ -11,6 +11,7 @@ angular.module('myApp', [
   'myApp.version', 
   'myAppFilters', 
   'myApp.testquicklist', 
+  'myApp.selectOnClick',
   'myAppQuickList',
   'myApp.testnumpad', 
   'myAppNumPad'

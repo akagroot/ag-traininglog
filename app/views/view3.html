@@ -30,28 +30,59 @@
 			.input-group {
 				margin-bottom: 5px;
 			}
+			blockquote small:before {
+				content: '';
+			}
 		</style>
 		<div class="form-inline well well-sm" ng-repeat="(key, exercise) in exercises track by $index">
 			<h4><small>Exercise {{$index + 1}}</small></h4>
+			<h5 ng-show="exercise.supersets.length > 0"><small>Superset {{exercise.supersetIndex}}</small></h5>
 			<div class="input-group col-xs-12">
 				<span class="input-group-addon">Name</span>
-				<input class="form-control" ng-model="exercise.name" ng-click="exerciseNameClicked(key)" placeholder="Choose an exercise" ng-change="exerciseNameChanged(exercise.name)"/>
+				<input select-on-click class="form-control" ng-model="exercise.name" ng-click="exerciseNameClicked(key)" placeholder="Choose an exercise" ng-change="exerciseNameChanged(exercise.name)"/>
 			</div>
 			<div class="input-group">
 				<span class="input-group-addon">Sets</span>
-				<input class="form-control" ng-model="exercise.sets" placeholder="Sets"/>
+				<input select-on-click class="form-control" ng-model="exercise.sets" placeholder="Sets"/>
 				<span class="input-group-addon">Reps</span>
-				<input class="form-control" ng-model="exercise.reps" placeholder="Reps"/>
+				<input select-on-click class="form-control" ng-model="exercise.reps" placeholder="Reps"/>
+				<span ng-show="exercise.sets == 1" class="input-group-addon">@</span>
+				<input ng-show="exercise.sets == 1" select-on-click class="form-control" placeholder="lbs" />
 			</div>
-			<div class="well well-sm" ng-show="exercise.sets > 0">
+			<blockquote ng-show="exercise.sets > 1">
 				<div class="input-group" ng-repeat="i in getNumber(exercise.sets)">
 					<span class="input-group-addon"><small>Set {{i}}</small></span>
-					<span class="input-group-addon"><small>Reps Complete</small></span>
-					<input class="form-control" value="{{exercise.reps}}" />
+					<span class="input-group-addon"><small>Reps</small></span>
+					<input select-on-click class="form-control" value="{{exercise.reps}}" />
 					<span class="input-group-addon"><small>@</small></span>
-					<input class="form-control" />
+					<input select-on-click class="form-control" />
 				</div>
+			</blockquote>
+			<div ng-repeat="(supersetKey, superset) in exercise.supersets">
+				<h5><small>Superset {{superset.supersetIndex}}</small></h5>
+				<div class="input-group col-xs-12">
+					<span class="input-group-addon">Name</span>
+					<input select-on-click class="form-control" ng-model="superset.name" ng-click="supersetNameClicked(key, supersetKey)" placeholder="Choose an exercise" ng-change="exerciseNameChanged(superset.name)"/>
+				</div>
+				<div class="input-group">
+					<span class="input-group-addon">Sets</span>
+					<input select-on-click class="form-control" ng-model="superset.sets" placeholder="Sets"/>
+					<span class="input-group-addon">Reps</span>
+					<input select-on-click class="form-control" ng-model="superset.reps" placeholder="Reps"/>
+					<span ng-show="superset.sets == 1" class="input-group-addon">@</span>
+					<input ng-show="superset.sets == 1" select-on-click class="form-control" placeholder="lbs" />
+				</div>
+				<blockquote ng-show="superset.sets > 1">
+					<div class="input-group" ng-repeat="i in getNumber(superset.sets)">
+						<span class="input-group-addon"><small>Set {{i}}</small></span>
+						<span class="input-group-addon"><small>Reps</small></span>
+						<input select-on-click class="form-control" value="{{superset.reps}}" />
+						<span class="input-group-addon"><small>@</small></span>
+						<input select-on-click class="form-control" />
+					</div>
+				</blockquote>
 			</div>
+			<div class="text-right clickable clickable-text" ng-click="addSuperset(key)">+ Add Superset</div>
 		</div>
 		<span class="clickable clickable-text" ng-click="addExercise();">+ Add Exercise</span>
 		<div class="navbar navbar-fixed-bottom" style="padding-left: 20px; padding-right:20px;">
