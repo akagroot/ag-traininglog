@@ -1,0 +1,29 @@
+{
+	"logs":
+	[
+		{
+			"date":"",
+			"notes":"",
+			"groups":
+			[
+				{
+					"position":"",
+					"exercises":
+					[
+						{	
+							"name":"", 
+							"position":"",
+							"set_count":"",
+							"rep_count":"",
+							"sets": 
+							[
+								{ "reps":"", "weight":"" }
+							], 
+
+						}
+					]
+				}
+			]
+		}
+	]
+}

@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('myApp.view1', ['ngRoute'])
+angular.module('myApp.view1', ['ngRoute', 'ngSanitize'])
 
 .config(['$routeProvider', function($routeProvider) {
   $routeProvider.when('/view1', {
@@ -9,12 +9,8 @@ angular.module('myApp.view1', ['ngRoute'])
   });
 }])
 
-.controller('View1Ctrl', ['$scope', '$http', '$location',
+.controller('View1Ctrl', ['$scope', '$http', '$location', 
 	function($scope, $http, $location) {
-		// $http.get('data/log_data.json').success(function(data) {
-		// 	$scope.entries = data;
-		// });
-
 		$scope.logout = function(form) {
 			Parse.User.logOut();
 			$location.path('/login');
@@ -23,10 +19,12 @@ angular.module('myApp.view1', ['ngRoute'])
 		var currentUser = Parse.User.current();
 
 		var Log = Parse.Object.extend("Log");
+		var LogGroup = Parse.Object.extend("LogGroup");
+
 		var query = new Parse.Query(Log)
 			.limit(14)
 			.equalTo("user", currentUser)
-			.select("description", "date")
+			// .select("description", "date")
 			.find()
 			.then(function(results) {
 				var entries = new Array();

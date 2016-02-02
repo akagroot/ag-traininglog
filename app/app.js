@@ -14,7 +14,8 @@ angular.module('myApp', [
   'myApp.selectOnClick',
   'myAppQuickList',
   'myApp.testnumpad', 
-  'myAppNumPad'
+  'myAppNumPad', 
+  'myApp.ExerciseService'
 ]).
 config(['$routeProvider', function($routeProvider, $locationProvider) {
   $routeProvider.otherwise({redirectTo: '/login'});
