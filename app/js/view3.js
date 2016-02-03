@@ -18,19 +18,25 @@ angular.module('myApp.view3', ['ngRoute'])
 				return;
 			}
 
-			ExerciseService.assignExercisesToScope($scope, function() {
+			ExerciseService.assignExercisesToScope($scope, function(successful) {
+				var notSuccessful = function() {
+					alert("Something went wrong.");
+				}
+				
+				if(successful) {
+					ExerciseService.addLog($scope, function(successful) {
 
+					if(successful) {
+						$location.path('/view1');
+						$scope.$apply();
+					}
+					else
+						notSuccessful();
+					});	
+				} else 
+					notSuccessful();
+				
 			});
-
-			// ExerciseService.addLog($scope, function(successful) {
-			// 	if(successful)
-			// 	{
-			// 		$location.path('/view1');
-			// 		$scope.$apply();
-			// 	}
-			// 	else
-			// 		alert("Something went wrong.");
-			// });
 		}
 
 		var letters = ["A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z",];
@@ -158,16 +164,19 @@ angular.module('myApp.view3', ['ngRoute'])
 			$scope.exerciseListFilter = name;
 		}
 
+		$scope.hideExerciseQuickList = function() {
+			$scope.showExerciseQuicklist = false;
+			$scope.selectedExerciseKey = null;
+			$scope.selectedSupersetKey = null;
+		}
+
 		$scope.exercisePicked = function(item) {
 			var superset = getSuperset($scope.selectedExerciseKey, $scope.selectedSupersetKey);
 
 			superset.exercise = item;
 			superset.name = item.name;
 
-			$scope.showExerciseQuicklist = false;
-
-			$scope.selectedExerciseKey = null;
-			$scope.selectedSupersetKey = null;
+			$scope.hideExerciseQuickList();
 		}
 
 		$scope.exerciseListFilter = "";

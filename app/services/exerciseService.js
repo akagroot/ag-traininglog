@@ -12,9 +12,9 @@ angular.module('myApp.ExerciseService', [])
 			.equalTo('user', currentUser);
 
 		var query3 = Parse.Query.or(standardExerciseQuery, customExerciseQuery)
+			.ascending('name_lowercase')
 			.find()
 			.then(function(results) {
-				console.log(results);
 				$.each(results, function(i, e) {
 					entries.push(e.toJSON());
 				});
@@ -23,29 +23,82 @@ angular.module('myApp.ExerciseService', [])
 	};
 
 	this.assignExercisesToScope = function(scope, callback) {
+		var findExerciseQueries = new Array();
+		var submittedSupersets = new Array();
+		var Exercise = Parse.Object.extend("Exercise");
+		var currentUser = Parse.User.current();
+
 		$.each(scope.exercises, function(i, group) {
 			$.each(group.supersets, function(j, superset) {
 				if(typeof superset.name != 'undefined' 
 					&& typeof superset.exercise == 'undefined') {
-					console.log(superset);
-				
-					var Exercise = Parse.Object.extend("Exercise");
-					var query = Parse.Query(Exercise)
-					.equalTo('name_lowercase', superset.name.toLowerCase())
-					.find()
-					.then(function(results) {
-						console.log(results);
-					}, function(error) {
-						console.log(error);
-					});
+					var query = new Parse.Query(Exercise)
+					.equalTo('name_lowercase', superset.name.trim().toLowerCase());
+
+					findExerciseQueries.push(query);
+					submittedSupersets.push(superset);
 				}
 			});
 		});
+
+		if(findExerciseQueries.length > 0) {
+			var findAllExercises = Parse.Query.or
+			.apply(this, findExerciseQueries)
+			.find()
+			.then(function(results) {
+				var lowercaseNames = new Array();
+				for(var i = 0; i < results.length; i++) {
+					var loadExercise = results[i].toJSON();
+					lowercaseNames.push(loadExercise.name_lowercase);
+				}
+
+				if(lowercaseNames.length > 0) {
+					submittedSupersets = submittedSupersets.filter(function(el) {
+						return lowercaseNames.indexOf(el.name.trim().toLowerCase()) < 0;
+					});
+				}
+
+				if(submittedSupersets.length > 0) {
+					var saveObjects = new Array();
+
+					$.each(submittedSupersets, function(i, e) {
+						var newExercise = new Exercise();
+						newExercise.set('name', e.name);
+						newExercise.set('name_lowercase', e.name.toLowerCase());
+						newExercise.set('user', currentUser);
+						saveObjects.push(newExercise);
+						e.exercise = newExercise;
+					});
+
+					console.log(submittedSupersets);
+
+					Parse.Object.saveAll(saveObjects, {
+						success:function() {
+							$.each(saveObjects, function(i, newExercise) {
+								newExercise.objectId = newExercise.id;
+							});
+
+							callback(true);
+						}, 
+						error: function(error) {
+							console.log(error);
+							callback(false);
+						}
+					});
+				} else {
+					callback(true);
+				}
+			}, function(error) {
+				callback(false);
+				console.log(error);
+			});
+		} else { 
+			callback(true);
+		}
 	}
 
 	// Save the log to Parse
 	this.addLog = function(scope, callback) {
-		console.log(scope);
 		var currentUser = Parse.User.current();
 
 		var saveObjects = new Array();
@@ -75,7 +128,6 @@ angular.module('myApp.ExerciseService', [])
 
 			if(validGroup)
 			{
-				console.log(group);
 				exerciseCount++;
 				supersetLetterIndex = 0;
 
@@ -87,8 +139,6 @@ angular.module('myApp.ExerciseService', [])
 
 				$.each(group.supersets, function(index, superset) {
 					if(typeof superset.name != 'undefined') {
-						console.log(superset);
-
 						var LogGroupExercise = Parse.Object.extend("LogGroupExercise");
 						var newLogGroupExercise = new LogGroupExercise();
 						var selectedExercise = new Exercise({id:superset.exercise.objectId});
@@ -103,7 +153,8 @@ angular.module('myApp.ExerciseService', [])
 							logDescription += (superset.sets + "x" 
 								+ superset.reps + "</b>&nbsp;");
 						}
-						logDescription += selectedExercise.name;
+
+						logDescription += superset.name;
 
 						if(typeof superset.notes != 'undefined') {
 							logDescriptionEntries += ("<i>"
@@ -123,7 +174,6 @@ angular.module('myApp.ExerciseService', [])
 
 						if(superset.doMeasure) {
 							$.each(superset.repsCompleted, function(ind, repsComplete) {
-								console.log(repsComplete);
 								var LogGroupExerciseSet = Parse.Object.extend("LogGroupExerciseSet");
 								var newLogGroupExerciseSet = new LogGroupExerciseSet();
 								newLogGroupExerciseSet.set("LogGroupExercise", newLogGroupExercise);

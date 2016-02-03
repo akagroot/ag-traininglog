@@ -42,54 +42,54 @@
 		</style>
 		<div class="form-inline well well-sm" ng-repeat="(key, exercise) in exercises track by $index">
 			<div>
-				<div style="float:right;" class="ib clickable clickable-text clickable-text-alert" ng-click="removeExerciseGroup(key)"><small>Remove Group</small></div>
+				<div style="float:right;" class="ib clickable clickable-text clickable-text-alert" ng-focus="hideExerciseQuickList()" ng-click="removeExerciseGroup(key)"><small>Remove Group</small></div>
 				<h4><small>Exercise {{$index + 1}}</small></h4>
 				<div class="clearfix"></div>
 			</div>
 			<div ng-repeat="(supersetKey, superset) in exercise.supersets">
 				<div ng-show="exercise.supersets.length > 1">
-					<div style="float:right;" class="ib clickable clickable-text clickable-text-alert" ng-click="removeSuperset(key, supersetKey)"><small>Remove Superset</small></div>
+					<div style="float:right;" ng-focus="hideExerciseQuickList()" class="ib clickable clickable-text clickable-text-alert" ng-click="removeSuperset(key, supersetKey)"><small>Remove Superset</small></div>
 					<h5><small>Superset {{$parent.letters[$index]}}</small></h5>
 					<div class="clearfix"></div>
 				</div>
 				<div class="input-group col-xs-12">
 					<span class="input-group-addon">Name</span>
-					<input select-on-click class="form-control" ng-model="superset.name" ng-click="supersetNameClicked(key, supersetKey)" placeholder="Choose an exercise" ng-change="exerciseNameChanged(superset.name)"/>
+					<input select-on-click class="form-control" ng-model="superset.name" ng-focus="supersetNameClicked(key, supersetKey)" placeholder="Choose an exercise" ng-change="exerciseNameChanged(superset.name)"/>
 				</div>
 				<div class="input-group">
 					<span class="input-group-addon">Sets</span>
-					<input select-on-click class="form-control" ng-change="setsChanged(key, supersetKey, superset.sets)" ng-model="superset.sets" placeholder="Sets"/>
+					<input select-on-click class="form-control" ng-change="setsChanged(key, supersetKey, superset.sets)" ng-model="superset.sets" placeholder="Sets" ng-focus="hideExerciseQuickList()" format="number"/>
 					<span class="input-group-addon">Reps</span>
-					<input select-on-click class="form-control" ng-change="repsChanged(key, supersetKey, superset.reps)" ng-model="superset.reps" placeholder="Reps"/>
+					<input select-on-click class="form-control" ng-change="repsChanged(key, supersetKey, superset.reps)" ng-model="superset.reps" placeholder="Reps" ng-focus="hideExerciseQuickList()" format="number"/>
 					<span ng-show="superset.sets == 1 && !hideThisMeasurement" class="input-group-addon">@</span>
-					<input ng-show="superset.sets == 1 && !hideThisMeasurement" select-on-click class="form-control" placeholder="lbs" />
+					<input ng-show="superset.sets == 1 && !hideThisMeasurement" select-on-click class="form-control" placeholder="lbs" ng-focus="hideExerciseQuickList()" format="number"/>
 				</div>
 				<div class="input-group">
 					<span class="input-group-addon">Notes</span>
-					<input select-on-click class="form-control" ng-model="superset.notes" placeholder="Any additional notes"/>
+					<input select-on-click class="form-control" ng-model="superset.notes" ng-focus="hideExerciseQuickList()" placeholder="Any additional notes"/>
 				</div>
 				<blockquote ng-show="superset.sets > 1 && !hideThisMeasurement">
 					<div class="input-group" ng-repeat="(repsCompletedKey, repsComplete) in superset.repsCompleted">
 						<span class="input-group-addon"><small>Set {{i}}</small></span>
 						<span class="input-group-addon"><small>Reps</small></span>
-						<input select-on-click class="form-control" ng-change="repsCompleteRepsChanged(key, $index, repsCompletedKey)" ng-model="repsComplete.reps" />
+						<input select-on-click class="form-control" ng-change="repsCompleteRepsChanged(key, $index, repsCompletedKey)" ng-model="repsComplete.reps" ng-focus="hideExerciseQuickList()" format="number"/>
 						<span class="input-group-addon"><small>@</small></span>
-						<input select-on-click class="form-control" ng-model="repsComplete.measurement"/>
+						<input select-on-click class="form-control" ng-focus="hideExerciseQuickList()" ng-model="repsComplete.measurement" format="number"/>
 					</div>
 				</blockquote>
 				<div class="text-right">
-					<div style="display:inline-block;" class="clickable clickable-text" ng-show="hideThisMeasurement && superset.sets > 0" ng-click="hideThisMeasurement = false; addMeasureClicked(key, $index)">Add Measurements</div>
+					<div style="display:inline-block;" class="clickable clickable-text" ng-show="hideThisMeasurement && superset.sets > 0" ng-focus="hideExerciseQuickList()" ng-click="hideThisMeasurement = false; addMeasureClicked(key, $index)">Add Measurements</div>
 				</div>
 				<div class="text-right">
-					<div class="ib clickable clickable-text" ng-show="!hideThisMeasurement && superset.sets > 0" ng-click="hideThisMeasurement = true; dontMeasureClicked(key, $index)">Don't measure</div>
+					<div class="ib clickable clickable-text" ng-focus="hideExerciseQuickList()" ng-show="!hideThisMeasurement && superset.sets > 0" ng-click="hideThisMeasurement = true; dontMeasureClicked(key, $index)">Don't measure</div>
 				</div>
 			</div>
 			<br/>
 			<div class="text-right">
-				<div class="ib clickable clickable-text" ng-click="addSuperset(key)">+ Add Superset</div>
+				<div class="ib clickable clickable-text" ng-focus="hideExerciseQuickList()" ng-click="addSuperset(key)">+ Add Superset</div>
 			</div>
 		</div>
-		<span class="clickable clickable-text" ng-click="addExercise();">+ Add Exercise</span>
+		<span class="clickable clickable-text" ng-focus="hideExerciseQuickList()" ng-click="addExercise();">+ Add Exercise</span>
 		<div class="navbar navbar-fixed-bottom" style="padding-left: 20px; padding-right:20px;">
 			<input type="submit" value="Submit" class="btn btn-primary col-xs-12 col-md-offset-3 col-md-6 col-xl-offset-4 col-xl-4"/>
 			</input>

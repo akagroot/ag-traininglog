@@ -5,7 +5,9 @@ angular.module('myAppQuickList', [])
 			items: '=', 
 			filter: '=', 
 			itemPicked: '&', 
-			closePressed: '&'
+			closePressed: '&',
+			noItemsFound: '&', 
+			itemsFound: '&'
 		}, 
 		templateUrl: 'directives/quicklist.html'
 	};

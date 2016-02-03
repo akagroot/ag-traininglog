@@ -12,6 +12,7 @@ angular.module('myApp', [
   'myAppFilters', 
   'myApp.testquicklist', 
   'myApp.selectOnClick',
+  'myApp.NumbersOnly',
   'myAppQuickList',
   'myApp.testnumpad', 
   'myAppNumPad', 
