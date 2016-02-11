@@ -10,11 +10,11 @@ angular.module('myApp', [
   'myApp.view3',
   'myApp.version', 
   'myAppFilters', 
-  'myApp.testquicklist', 
+  // 'myApp.testquicklist', 
   'myApp.selectOnClick',
   'myApp.NumbersOnly',
   'myAppQuickList',
-  'myApp.testnumpad', 
+  // 'myApp.testnumpad', 
   'myAppNumPad', 
   'myApp.ExerciseService'
 ]).
